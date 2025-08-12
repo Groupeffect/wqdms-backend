@@ -1,11 +1,12 @@
-from django.core.management import call_command
 from django import template
 import json
 from django.contrib import admin
-
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import AuthenticationFailed
 from django.contrib.auth import get_user_model
+from interface.models import Visualization
+from wqdms.settings import SERVER_HOST
+from rest_framework.reverse import reverse
 
 User = get_user_model()
 
@@ -36,6 +37,43 @@ def admin_site_title(*args, **kwargs):
 @register.simple_tag
 def allowed_operation_mimetypes():
     return f"{MIMIE_TYPES}"
+
+
+@register.simple_tag
+def get_host():
+    return SERVER_HOST
+
+
+@register.simple_tag
+def get_visualization_list():
+    return json.dumps(list(Visualization.objects.all().values()))
+
+
+@register.simple_tag
+def get_service_urls():
+    data = [
+        {
+            "name": "swagger",
+        }
+    ]
+    return json.dumps(data)
+
+
+@register.simple_tag
+def get_page_urls():
+    extra = [
+        {"name": "admin", "link": get_host() + "/admin/"},
+        {"name": "swagger", "link": get_host() + "/api/v0/swagger/"},
+        {"name": "redoc", "link": get_host() + "/api/v0/redoc/"},
+    ]
+    data = [
+        {
+            "name": i.name,
+            "link": get_host() + reverse("visualization-detail", kwargs={"pk": i.pk}),
+        }
+        for i in list(Visualization.objects.all())
+    ] + extra
+    return json.dumps(data)
 
 
 @register.filter

@@ -83,3 +83,13 @@ a{
 .inline{
     display: inline-block;
 }
+.card-a{
+    margin: 12px;
+    margin-left: 0px;
+    margin-right: 24px;
+    padding: 12px;
+    padding-bottom: 24px;
+    border: 4px;
+    border-color: aliceblue;
+    border: solid;
+}

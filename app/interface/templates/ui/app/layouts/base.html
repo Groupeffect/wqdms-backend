@@ -1,14 +1,23 @@
 {% load static %}
 {% load rest_framework %}
+{% load interface %}
+
+<!--NAV-->
 {% if response.data.navbar %}
 {% include response.data.navbar %}
 {% endif %}
+
+<!--HEAD-->
 {% if response.data.header %}
 {% include response.data.header %}
 {% endif %}
+
+<!--VIEW-->
 {% if response.data.view %}
 {% include response.data.view %}
 {% endif %}
+
+<!--FOOT-->
 {% if response.data.footer %}
 {% include response.data.footer %}
 {% endif %}

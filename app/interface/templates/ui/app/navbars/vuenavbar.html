@@ -1,0 +1,26 @@
+{% extends 'ui/app/navbars/navbar.html' %}
+{% load static %}
+{% load rest_framework %}
+{% load interface %}
+
+{% block select %}
+<div class="inline" style="margin-left: 10px;margin-right: 5px;">
+  <h3>|</h3>
+</div>
+<div class="inline" style="margin-top: 20px; vertical-align:top;">
+
+<select style="border: none;background: none;font-size: 22px;" name="pages" id="pages" onchange="if (this.value) window.location.href=this.value">
+
+
+  <option value="{% get_host %}/" style="color:black;">
+      Select UI
+  </option>
+  <div v-for="(v,k) in pages" :key="k">
+    <option :value="v.link" style="color:black;">
+      [[ v.name ]]
+    </option>
+  </div>
+</select>
+</div>
+
+{% endblock select %}

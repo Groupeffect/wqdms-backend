@@ -16,6 +16,7 @@ from corsheaders.defaults import default_methods
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+SERVER_HOST = getenv("SERVER_HOST", "http://localhost:8000")
 
 
 # Quick-start development settings - unsuitable for production
@@ -41,6 +42,7 @@ CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:8081",
     "http://0.0.0.0:8081",
     "http://localhost:8081",
+    SERVER_HOST,
 ]
 
 # Application definition

@@ -5,6 +5,8 @@ from rest_framework.renderers import (
     JSONRenderer,
 )
 from django.conf import settings
+from interface.templatetags import interface as ttags
+import json
 
 
 class StaticHtml(TemplateHTMLRenderer):
@@ -30,18 +32,10 @@ class LandingpageAPIView(views.APIView):
                             "vueData": "ui/app/data/user.js.vue",
                             "header": "ui/app/headers/header.html",
                             "footer": "ui/app/footers/footer.html",
-                            "navbar": "ui/app/navbars/navbar.html",
+                            "navbar": "ui/app/navbars/vuenavbar.html",
                             "view": "ui/app/views/Landingpage.html",
                         }
                     }
                 }
             )
-        return response.Response(
-            data={
-                "admin": f"{host}/admin",
-                "interface": f"{host}/ui/visualization/",
-                "swagger": f"{host}/api/v0/swagger/",
-                "redoc": f"{host}/api/v0/redoc/",
-                "schema": f"{host}/api/v0/schema/",
-            }
-        )
+        return response.Response(data=json.loads(ttags.get_page_urls()))

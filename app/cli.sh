@@ -6,6 +6,11 @@ cmd_wqdms_backend_mig(){
     python3 manage.py migrate
 }
 
+cmd_wqdms_backend_dump(){
+    python3 manage.py dumpdata auth.user > ./interactive/admin.json
+    python3 manage.py dumpdata interface > ./interactive/interface.json
+}
+
 cmd_wqdms_backend_start(){
     cmd_wqdms_backend_mig
     python3 manage.py loaddata ./interactive/admin.json

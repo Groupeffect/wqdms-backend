@@ -24,19 +24,6 @@
 </head>
 
 <body>
-
-  
-{% autoescape off %}
-  {% if response.data.layout %}
-    {% if response.data.is_raw_template %}
-      {{ response.data.layout }}
-    {% else %}
-      {% include response.data.layout %}
-    {% endif %}
-  {% endif %}
-{% endautoescape %}
-
-
     {% block script %}
       <script type="application/json" id="drf_csrf">
         {
@@ -52,6 +39,19 @@
       <script src="{% static "rest_framework/js/default.js" %}"></script>
       <script src="{% static "rest_framework/js/load-ajax-form.js" %}"></script>
     {% endblock %}
+  
+{% autoescape off %}
+  {% if response.data.layout %}
+    {% if response.data.is_raw_template %}
+      {{ response.data.layout }}
+    {% else %}
+      {% include response.data.layout %}
+    {% endif %}
+  {% endif %}
+{% endautoescape %}
+
+
+
   </body>
 
 

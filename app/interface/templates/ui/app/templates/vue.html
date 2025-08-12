@@ -9,18 +9,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UI | WQDMS</title>
-  <link type="text/css" rel="stylesheet" href="{% static 'ui/assets/index.css' %}">
   <link type="text/css" rel="stylesheet"href="{% static 'ui/assets/tooltip.css' %}">
-      {% block style %}
-        {% block bootstrap_theme %}
-          <link rel="stylesheet" type="text/css" href="{% static 'rest_framework/css/bootstrap.min.css' %}"/>
-          <link rel="stylesheet" type="text/css" href="{% static 'rest_framework/css/bootstrap-tweaks.css' %}"/>
-        {% endblock %}
-
-        <link rel="stylesheet" type="text/css" href="{% static 'rest_framework/css/prettify.css' %}"/>
-        <link rel="stylesheet" type="text/css" href="{% static 'rest_framework/css/default.css' %}"/>
-        {% if code_style %}<style>{{ code_style }}</style>{% endif %}
-      {% endblock %}
+  {% block style %}
+  {% block bootstrap_theme %}
+  <link rel="stylesheet" type="text/css" href="{% static 'rest_framework/css/bootstrap.min.css' %}"/>
+  <link rel="stylesheet" type="text/css" href="{% static 'rest_framework/css/bootstrap-tweaks.css' %}"/>
+  {% endblock %}
+  
+  <link rel="stylesheet" type="text/css" href="{% static 'rest_framework/css/prettify.css' %}"/>
+  <link rel="stylesheet" type="text/css" href="{% static 'rest_framework/css/default.css' %}"/>
+  {% if code_style %}<style>{{ code_style }}</style>{% endif %}
+  {% endblock %}
+  <link type="text/css" rel="stylesheet" href="{% static 'ui/assets/index.css' %}">
 </head>
 
 <body>
