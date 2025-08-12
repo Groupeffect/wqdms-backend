@@ -23,7 +23,7 @@ from django.conf import settings
 urlpatterns = static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + [
     path("api/auth/", include("rest_framework.urls", namespace="rest_framework")),
     # re_path("api/auth/", include("rest_framework.urls"), name="auth"),
-    re_path(r"api/", include("api.urls.routes"), name="api"),
+    # re_path(r"api/", include("api.urls.routes"), name="api"),
     re_path(r"api/", include("api.urls.generator"), name="api"),
     re_path(r"ui/", include("interface.urls.visualization"), name="interface"),
     re_path(r"admin/", admin.site.urls),

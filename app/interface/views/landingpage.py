@@ -24,12 +24,13 @@ class LandingpageAPIView(views.APIView):
                     "response": {
                         "data": {
                             "is_vue_app": True,
-                            "template": "ui/app/base.html",
-                            "vueApp": "ui/app/app.js",
+                            "template": "ui/app/templates/vue.html",
+                            "layout": "ui/app/layouts/base.html",
+                            "vueApp": "ui/app/vue/app.js",
                             "vueData": "ui/app/data/user.js.vue",
-                            "header": "ui/app/components/header.html",
-                            "footer": "ui/app/components/footer.html",
-                            "navbar": "ui/app/components/navbar.html",
+                            "header": "ui/app/headers/header.html",
+                            "footer": "ui/app/footers/footer.html",
+                            "navbar": "ui/app/navbars/navbar.html",
                             "view": "ui/app/views/Landingpage.html",
                         }
                     }

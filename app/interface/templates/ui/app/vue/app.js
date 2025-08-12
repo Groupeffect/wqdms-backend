@@ -36,7 +36,7 @@ const app = createApp({
         {% endif %}
         
     },
-    template: `{% include response.data.template %}`
+    template: `{% include response.data.layout %}`
 })
 // app.config.compilerOptions.delimiters = ['[[', ']]']
 app.mount('#app')

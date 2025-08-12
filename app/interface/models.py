@@ -169,9 +169,6 @@ class PredicateRelation(SystemAbstractModel):
 
 
 def file_upload(instance, filename, *args, **kwargs):
-    print("#### file_upload")
-    print(f"ARGS {args}")
-    print(f"KWARGS {kwargs}")
     instance.filename = filename
     # if base64
     # convert and save to instance.base64
@@ -214,7 +211,25 @@ class FileStorage(LifecycleModelMixin, models.Model):
         os.remove(os.path.join(settings.MEDIA_ROOT, self.upload.path))
 
 
+def get_file_choices(folder_name):
+    path = os.path.join(
+        settings.BASE_DIR, "interface", "templates", "ui", "app", folder_name
+    )
+    files = os.listdir(path)
+    return [
+        [
+            os.path.join("ui", "app", folder_name, i),
+            os.path.join("ui", "app", folder_name, i),
+        ]
+        for i in files
+    ]
+
+
 class Visualization(SystemAbstractModel):
+    class Meta:
+        ordering = ["sorting"]
+
+    sorting = models.FloatField(default=0.0)
     domain = models.CharField(
         max_length=300,
         blank=True,
@@ -243,6 +258,8 @@ class Visualization(SystemAbstractModel):
 
     is_vue_app = models.BooleanField(blank=False)
     is_raw = models.BooleanField(blank=False)
+    is_raw = models.BooleanField(blank=False)
+    is_raw_template = models.BooleanField(blank=False)
     render_string = models.JSONField(
         blank=True,
         null=True,
@@ -259,79 +276,99 @@ class Visualization(SystemAbstractModel):
         help_text='array of keys ["vueApp","template"] will be excluded',
     )
     context = models.JSONField(blank=True, null=True)
-    view = models.CharField(
-        max_length=2000,
-        blank=True,
-        null=True,
-        help_text="template path or string if 'render_sting' includes key 'view'",
-    )
     template = models.CharField(
+        choices=get_file_choices("templates"),
         max_length=2000,
         blank=True,
         null=True,
-        help_text="template path or string if 'render_sting' includes key 'template'",
+        help_text="template path of e.g. index.html that will be loaded first",
+    )
+    layout = models.CharField(
+        choices=get_file_choices("layouts"),
+        max_length=2000,
+        blank=True,
+        null=True,
+        help_text="template path of e.g. base.html",
     )
     navbar = models.CharField(
+        choices=get_file_choices("navbars"),
         max_length=2000,
         blank=True,
         null=True,
         help_text="template path or string if 'render_sting' includes key 'navbar'",
     )
     header = models.CharField(
+        choices=get_file_choices("headers"),
         max_length=2000,
         blank=True,
         null=True,
         help_text="template path or string if 'render_sting' includes key 'header'",
     )
+    view = models.CharField(
+        choices=get_file_choices("views"),
+        max_length=2000,
+        blank=True,
+        null=True,
+        help_text="template path or string if 'render_sting' includes key 'view'",
+    )
     footer = models.CharField(
+        choices=get_file_choices("footers"),
         max_length=2000,
         blank=True,
         null=True,
         help_text="template path or string if 'render_sting' includes key 'footer'",
     )
     vueApp = models.CharField(
+        choices=get_file_choices("vue"),
         max_length=2000,
         blank=True,
         null=True,
         help_text="template path or string if 'render_sting' includes key 'vueApp'",
     )
     vueData = models.CharField(
+        choices=get_file_choices("data"),
         max_length=2000,
         blank=True,
         null=True,
         help_text="template path or string if 'render_sting' includes key 'vueData'",
     )
     vueComputed = models.CharField(
+        choices=get_file_choices("computed"),
         max_length=2000,
         blank=True,
         null=True,
         help_text="template path or string if 'render_sting' includes key 'vueComputed'",
     )
     vueMounted = models.CharField(
+        choices=get_file_choices("mounted"),
         max_length=2000,
         blank=True,
         null=True,
         help_text="template path or string if 'render_sting' includes key 'vueMounted'",
     )
     vueCreated = models.CharField(
+        choices=get_file_choices("created"),
         max_length=2000,
         blank=True,
         null=True,
         help_text="template path or string if 'render_sting' includes key 'vueCreated'",
     )
     vueMethods = models.CharField(
+        choices=get_file_choices("methods"),
         max_length=2000,
         blank=True,
         null=True,
         help_text="template path or string if 'render_sting' includes key 'vueMethods'",
     )
     vueTop = models.CharField(
+        choices=get_file_choices("top"),
         max_length=2000,
         blank=True,
         null=True,
         help_text="template path or string if 'render_sting' includes key 'vueTop'",
     )
     vueBottom = models.CharField(
+        choices=get_file_choices("bottom"),
         max_length=2000,
         blank=True,
         null=True,

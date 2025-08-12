@@ -9,6 +9,7 @@ cmd_wqdms_backend_mig(){
 cmd_wqdms_backend_start(){
     cmd_wqdms_backend_mig
     python3 manage.py loaddata ./interactive/admin.json
+    python3 manage.py loaddata ./interactive/interface.json
     python3 manage.py runserver 0.0.0.0:8000
 }
 cmd_wqdms_jupyter_start(){

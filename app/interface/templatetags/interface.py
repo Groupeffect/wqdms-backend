@@ -11,8 +11,6 @@ User = get_user_model()
 
 register = template.Library()
 
-URLS_JSON = call_command("show_urls", "--format", "json")
-URLS_DICT = json.loads(URLS_JSON)
 MIMIE_TYPES = ["csv", "rdf", "xml", "json"]
 
 
@@ -28,15 +26,6 @@ def get_jwt_for_user(user_id):
     #     "refresh": str(refresh),
     #     "access": str(refresh.access_token),
     # }
-
-
-@register.simple_tag
-def urls_list(format="json"):
-    if format in ["dict"]:
-        return URLS_DICT
-    elif format in ["json"]:
-        return URLS_JSON
-    return call_command("show_urls", "--format", format)
 
 
 @register.simple_tag
