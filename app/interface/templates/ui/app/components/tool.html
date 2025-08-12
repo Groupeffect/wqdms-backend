@@ -1,0 +1,14 @@
+{% load interface %}
+{% load rest_framework %}
+{% load static %}
+{% if paginator %}
+<div class="inline pull-right ">
+    {% get_pagination_html paginator %}
+</div>
+{% endif %}
+
+{% if filter_form %}
+<div class="inline">
+    {{ filter_form }}
+</div>
+{% endif %}

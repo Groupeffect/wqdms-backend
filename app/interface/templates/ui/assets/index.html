@@ -1,0 +1,68 @@
+{% load static %}
+{% load interface %}
+{% load rest_framework %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Operation Tool</title>
+  <link rel="stylesheet" href="/interface/static/template/?file=assets/index.css&format=css">
+  <link rel="stylesheet" href="/interface/static/template/?file=assets/tooltip.css&format=css">
+  {% block style %}
+  <link rel="stylesheet" type="text/css"
+    href="/interface/static/template/?file=rest_framework/css/bootstrap.min.css&format=css" />
+  <link rel="stylesheet" type="text/css"
+    href="/interface/static/template/?file=rest_framework/css/bootstrap-tweaks.css&format=css" />
+  <link rel="stylesheet" type="text/css"
+    href="/interface/static/template/?file=rest_framework/css/prettify.css&format=css" />
+  <link rel="stylesheet" type="text/css"
+    href="/interface/static/template/?file=rest_framework/css/default.css&format=css" />
+  {% endblock %}
+</head>
+
+<body>
+  <script src="/interface/static/template/?file=assets/axios.min.js&format=js"></script>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "vue": "/interface/static/template/?file=assets/vue.esm-browser.js&format=js",
+      "dexie": "/interface/static/template/?file=assets/dexie.mjs&format=js"
+    }
+  }
+</script>
+  <div id="app"></div>
+  {% autoescape off %}
+  {% if setup %}
+  <script type="module">
+    {% include setup %}
+    app.config.compilerOptions.delimiters = ['[[', ']]']
+    app.mount('#app')
+  </script>
+  {% else %}
+  <h1>no vue setup selected</h1>
+  {% endif %}
+  {% endautoescape %}
+
+
+  <script type="application/json" id="drf_csrf">
+    {
+      "csrfHeaderName": "{{ csrf_header_name|default:'X-CSRFToken' }}",
+      "csrfToken": "{% if request %}{{ csrf_token }}{% endif %}"
+    }
+  </script>
+
+  <script src="/interface/static/template/?file=rest_framework/js/jquery-3.7.1.min.js&format=js"></script>
+  <script src="/interface/static/template/?format=js&file=rest_framework/js/ajax-form.js"></script>
+  <script src="/interface/static/template/?format=js&file=rest_framework/js/csrf.js"></script>
+  <script src="/interface/static/template/?format=js&file=rest_framework/js/bootstrap.min.js"></script>
+  <script src="/interface/static/template/?format=js&file=rest_framework/js/prettify-min.js"></script>
+  <script src="/interface/static/template/?format=js&file=rest_framework/js/default.js"></script>
+  <script src="/interface/static/template/?format=js&file=rest_framework/js/load-ajax-form.js"></script>
+</body>
+
+
+</html>
