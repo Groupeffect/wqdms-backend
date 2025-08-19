@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{% static 'ui/assets/htmx.min.js' %}"></script>
+    <title>WQDMS HTMX</title>
+</head>
+<body>
+    <h1>HTMX example</h1>
+<div id="main">
+    <a hx-get="/ui/htmx/h2/" hx-sawp="innerHTML" hx-target="#main" id="action">time</a>
+</div>
+{% autoescape off %}
+<input type="text"
+    id="input"
+    name="tag"
+    value="h1"
+    hx-trigger="keyup changed" 
+    hx-swap="innerHTML"
+    hx-target="#main"
+    hx-get="/ui/htmx/"
+    hx-on:change="console.log('OOK',this.value);document.getElementById('input').setAttribute('hx-get',`/ui/htmx/${this.value}/`);">
+<button hx-script="console.log('OOK')">
+    get
+</button>
+</body>
+{% endautoescape %}
+
+</html>
+
+<script>
+    
+</script>

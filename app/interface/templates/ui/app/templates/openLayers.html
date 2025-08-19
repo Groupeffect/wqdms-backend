@@ -1,0 +1,9 @@
+{% extends 'ui/app/templates/generic.html' %}
+{% load static %}
+{% load interface %}
+{% block body %}
+{% autoescape off %}
+{% pre_render_template "ui/openlayers/views/base.html" response.data.context  %}
+{% endautoescape %}
+{% endblock body %}
+

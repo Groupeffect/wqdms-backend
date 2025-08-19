@@ -1,31 +1,8 @@
+{% extends 'ui/app/templates/basic.html' %}
 {% load static %}
 {% load interface %}
 {% load rest_framework %}
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UI | WQDMS</title>
-  <link type="text/css" rel="stylesheet"href="{% static 'ui/assets/tooltip.css' %}">
-  {% block style %}
-  {% block bootstrap_theme %}
-  <link rel="stylesheet" type="text/css" href="{% static 'rest_framework/css/bootstrap.min.css' %}"/>
-  <link rel="stylesheet" type="text/css" href="{% static 'rest_framework/css/bootstrap-tweaks.css' %}"/>
-  {% endblock %}
-  
-  <link rel="stylesheet" type="text/css" href="{% static 'rest_framework/css/prettify.css' %}"/>
-  <link rel="stylesheet" type="text/css" href="{% static 'rest_framework/css/default.css' %}"/>
-  {% if code_style %}<style>{{ code_style }}</style>{% endif %}
-  {% endblock %}
-  <link type="text/css" rel="stylesheet" href="{% static 'ui/assets/index.css' %}">
-</head>
-
-<body>
-
-  
+{% block body %}
 {% autoescape off %}
 {% if response.data.is_vue_app %}
 <script type="module" src="{% static 'ui/assets/axios.min.js' %}"></script>
@@ -37,42 +14,13 @@
     }
   }
 </script>
-
-  <div id="app"></div>
-  <script type="module">
-    {% if response.data.vueApp %}
-    {% include response.data.vueApp %}
-    {% endif %}
-  </script>
-
-  {% else %}
-  {% if response.data.layout %}
-    {% if response.data.is_raw_template %}
-      {{ response.data.layout }}
-    {% else %}
-      {% include response.data.layout %}
-    {% endif %}
+<div id="app"></div>
+<script type="module">
+  {% if response.data.vueApp %}
+  {% include response.data.vueApp %}
   {% endif %}
+</script>
 {% endif %}
 {% endautoescape %}
+{% endblock body %}
 
-
-    {% block script %}
-      <script type="application/json" id="drf_csrf">
-        {
-          "csrfHeaderName": "{{ csrf_header_name|default:'X-CSRFToken' }}",
-          "csrfToken": "{% if request %}{{ csrf_token }}{% endif %}"
-        }
-      </script>
-      <script src="{% static "rest_framework/js/jquery-3.7.1.min.js" %}"></script>
-      <script src="{% static "rest_framework/js/ajax-form.js" %}"></script>
-      <script src="{% static "rest_framework/js/csrf.js" %}"></script>
-      <script src="{% static "rest_framework/js/bootstrap.min.js" %}"></script>
-      <script src="{% static "rest_framework/js/prettify-min.js" %}"></script>
-      <script src="{% static "rest_framework/js/default.js" %}"></script>
-      <script src="{% static "rest_framework/js/load-ajax-form.js" %}"></script>
-    {% endblock %}
-  </body>
-
-
-</html>

@@ -258,7 +258,6 @@ class Visualization(SystemAbstractModel):
 
     is_vue_app = models.BooleanField(blank=False)
     is_raw = models.BooleanField(blank=False)
-    is_raw = models.BooleanField(blank=False)
     is_raw_template = models.BooleanField(blank=False)
     render_string = models.JSONField(
         blank=True,
@@ -289,6 +288,13 @@ class Visualization(SystemAbstractModel):
         blank=True,
         null=True,
         help_text="template path of e.g. base.html",
+    )
+    css = models.CharField(
+        choices=get_file_choices("css"),
+        max_length=2000,
+        blank=True,
+        null=True,
+        help_text="template path of e.g. index.css",
     )
     navbar = models.CharField(
         choices=get_file_choices("navbars"),

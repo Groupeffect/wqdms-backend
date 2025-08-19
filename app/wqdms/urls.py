@@ -19,8 +19,11 @@ from django.contrib import admin
 from django.urls import re_path, include, path
 from django.conf.urls.static import static
 from django.conf import settings
+from debug_toolbar.toolbar import debug_toolbar_urls
+from django.conf import settings
 
-urlpatterns = static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + [
+media = static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns = media + [
     path("api/auth/", include("rest_framework.urls", namespace="rest_framework")),
     # re_path("api/auth/", include("rest_framework.urls"), name="auth"),
     re_path(r"api/", include("api.urls.routes"), name="api"),
@@ -29,3 +32,6 @@ urlpatterns = static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + [
     re_path(r"admin/", admin.site.urls),
     re_path(r"", include("interface.urls.landingpage"), name="start"),
 ]
+
+if not settings.TESTING:
+    urlpatterns += debug_toolbar_urls()

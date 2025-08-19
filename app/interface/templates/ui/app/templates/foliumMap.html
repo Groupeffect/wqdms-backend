@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    {% block head %}
+    <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <script src="{% static 'ui/folium/leaflet.js' %}"></script>
+    <script src="{% static 'ui/folium/jquery-3.7.1.min.js' %}"></script>
+    <script src="{% static 'ui/folium/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'ui/folium/leaflet.awesome-markers.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'ui/folium/leaflet.css' %}" />
+    <link rel="stylesheet" href="{% static 'ui/folium/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'ui/folium/bootstrap-glyphicons.css' %}" />
+    <link rel="stylesheet" href="{% static 'ui/folium/all.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'ui/folium/leaflet.awesome-markers.css' %}" />
+    <link rel="stylesheet" href="{% static 'ui/folium/leaflet.awesome.rotate.min.css' %}" />
+{% autoescape off %}    
+    {{ response.data.styles }}
+{% endautoescape %}
+
+</head>
+{% endblock head %}
+{% autoescape off %}
+{{ response.data.body }}
+{{ response.data.script }}
+{% endautoescape %}
+
+</html>

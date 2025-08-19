@@ -1,0 +1,40 @@
+{% load static %}
+{% with ctx=response.data.context %}
+
+{% block head %}
+{% include 'ui/openlayers/components/head.html' %}
+{% endblock head %}
+
+{% block style %}
+<style>
+    #{% if ctx.target_id %}{{ ctx.target_id }}{% else %}olmap{% endif %}{
+        width: 400px;
+        height: 400px;
+    }
+</style>
+{% endblock style %}
+
+{% block map %}
+<div class="map dj_map" id="{% if ctx.target_id %}{{ ctx.target_id }}{% else %}olmap{% endif %}" ></div>
+{% endblock map %}
+{% block body %}
+<button onclick="console.log(geoData())">GEOJSON</button>
+<button onclick="clearAllLayersBtn()">Clear</button>
+{% endblock body %}
+
+
+{% block script %}
+<script>
+    
+{% include 'ui/openlayers/components/data_wrapper.js'  %}
+{% include 'ui/openlayers/components/map.js' %}
+{% include 'ui/openlayers/components/tilelayer.js'  %}
+const map = createMap(MAP_DIV_ID,MAP_CENTER_ARRAY,MAP_VIEW_ZOOM)
+addGeoJSONTileWithEditor(map,GEOJSON)
+function clearAllLayersBtn(){
+    // clearAllLayers(map)
+    resetMap(map)
+}
+</script>
+{% endblock script %}
+{% endwith %}

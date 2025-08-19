@@ -9,6 +9,7 @@ User = get_user_model()
 
 class SystemAbstractModel(meta.SystemAbstractModel):
     name = models.CharField(max_length=256, blank=True, null=True)
+    label = models.CharField(max_length=256, blank=True, null=True)
 
     class Meta:
         abstract = True
@@ -16,46 +17,45 @@ class SystemAbstractModel(meta.SystemAbstractModel):
 
 class Unit(SystemAbstractModel):
     key = models.CharField(max_length=256, blank=True, null=True)
-    label = models.CharField(max_length=256, blank=True, null=True)
 
 
 class Institution(SystemAbstractModel):
-    label = models.CharField(max_length=256, blank=True, null=True)
+    pass
 
 
 class QualityFlag(SystemAbstractModel):
-    label = models.CharField(max_length=256, blank=True, null=True)
+    pass
 
 
 class AnalysisMethod(SystemAbstractModel):
-    label = models.CharField(max_length=256, blank=True, null=True)
+    pass
 
 
 class Waterbody(SystemAbstractModel):
-    label = models.CharField(max_length=256, blank=True, null=True)
+    pass
 
     class Meta:
         verbose_name_plural = "waterbodies"
 
 
 class Sample(SystemAbstractModel):
-    label = models.CharField(max_length=256, blank=True, null=True)
+    pass
 
 
 class SampleValue(SystemAbstractModel):
-    label = models.CharField(max_length=256, blank=True, null=True)
+    pass
 
 
 class Sampling(SystemAbstractModel):
     owner = models.ForeignKey(
         User, on_delete=models.DO_NOTHING, blank=True, null=True, related_name="user"
     )
-    label = models.CharField(max_length=256, blank=True, null=True)
+    pass
 
 
 class Fraction(SystemAbstractModel):
-    label = models.CharField(max_length=256, blank=True, null=True)
+    pass
 
 
 class Catchment(SystemAbstractModel):
-    label = models.CharField(max_length=256, blank=True, null=True)
+    pass

@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+{% block head %}
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <script src="{% static 'ui/folium/leaflet.js' %}"></script>
+    <script src="{% static 'ui/folium/jquery-3.7.1.min.js' %}"></script>
+    <script src="{% static 'ui/folium/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'ui/folium/leaflet.awesome-markers.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'ui/folium/leaflet.css' %}" />
+    <link rel="stylesheet" href="{% static 'ui/folium/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'ui/folium/bootstrap-glyphicons.css' %}" />
+    <link rel="stylesheet" href="{% static 'ui/folium/all.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'ui/folium/leaflet.awesome-markers.css' %}" />
+    <link rel="stylesheet" href="{% static 'ui/folium/leaflet.awesome.rotate.min.css' %}" />
+    
+    <style>
+        #MAP {
+            position: relative;
+            width: 100.0%;
+            height: 100.0%;
+            left: 0.0%;
+            top: 0.0%;
+        }
+        .leaflet-container { font-size: 1rem; }
+
+    html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    
+    
+    #map {
+        position:absolute;
+        top:0;
+        bottom:0;
+        right:0;
+        left:0;
+    }
+    </style>
+
+
+{% endblock head %}
+</head>
+<body>
+    {% block mapdiv %}
+    <div class="folium-map" id="MAP" ></div>
+    {% endblock mapdiv %}
+    <script>
+    {% block script %}
+        L_DISABLE_3D = false;
+        L_NO_TOUCH = false;
+        
+        var MAP = L.map(
+            "MAP",
+            {
+                center: [0, 0],
+                crs: L.CRS.EPSG3857,
+                ...{
+                    "zoom": 1,
+                    "zoomControl": true,
+                    "preferCanvas": false,
+                }
+                
+            }
+        );
+        var tile_layer = L.tileLayer(
+            "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+            {
+                "minZoom": 0,
+                "maxZoom": 19,
+                "maxNativeZoom": 19,
+                "noWrap": false,
+                "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+                "subdomains": "abc",
+                "detectRetina": false,
+                "tms": false,
+                "opacity": 1,
+            }
+        );
+        tile_layer.addTo(MAP);
+        function geo_json_onEachFeature(feature, layer) {
+            
+            layer.on({
+            });
+        };
+        {% block geojson %}
+        var geo_json = L.geoJson(null, {
+            onEachFeature: geo_json_onEachFeature,
+            ...{}
+        });
+        {% autoescape off %}
+        geo_json.addData({{ response.data.context }});
+        {% endautoescape %}
+        geo_json.setStyle(function(feature) {return feature.properties.style;});
+        var layer_control_layers = {
+            base_layers : {
+                "openstreetmap" : tile_layer,
+            },
+            overlays :  {
+                "countries" : geo_json,
+            },
+        };
+        let layer_control = L.control.layers(
+            layer_control_layers.base_layers,
+            layer_control_layers.overlays,
+            {
+                "position": "topright",
+                "collapsed": true,
+                "autoZIndex": true,
+            }
+        );
+        geo_json.addTo(MAP);
+        {% endblock geojson %}
+        layer_control.addTo(MAP);
+        tile_layer.addTo(MAP);
+    {% endblock script %}
+    </script>
+</body>
+</html>

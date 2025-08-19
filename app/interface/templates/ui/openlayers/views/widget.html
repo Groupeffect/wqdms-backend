@@ -1,0 +1,25 @@
+{% load static %}
+{% block head %}
+{% include 'ui/openlayers/components/head.html' %}
+<script src="{% static 'ui/assets/htmx.min.js' %}"></script>
+{% endblock head %}
+
+<style>
+    div:nth-child(n){
+        width: 100%;
+
+
+    }
+
+</style>
+<div id="loader">
+    <button id="Polygon" 
+        hx-swap="innerHTML"
+        hx-target="#loader"
+        hx-get="http://localhost:8000/ui/geometry/PolygonField/">
+        Polygon
+    </button>
+    {% if form %}
+    {{ form.as_div }}
+    {% endif %}
+</div>

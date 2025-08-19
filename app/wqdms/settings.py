@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import os
+import sys
 from pathlib import Path
 from os import getenv
 from corsheaders.defaults import default_methods
@@ -27,7 +29,7 @@ SECRET_KEY = "django-insecure--af3_fl2ti+dmfgz0_n09*xbam9#@tt6h1as0yj6$2b_+vq2^i
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+TESTING = "test" in sys.argv or "PYTEST_VERSION" in os.environ
 ALLOWED_HOSTS = ["*"]
 CORS_ALLOW_METHODS = (
     *default_methods,
@@ -44,7 +46,9 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost:8081",
     SERVER_HOST,
 ]
-
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
 # Application definition
 
 INSTALLED_APPS = [
@@ -185,3 +189,13 @@ SWAGGER_SETTINGS = {
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
+
+if not TESTING:
+    INSTALLED_APPS = [
+        *INSTALLED_APPS,
+        "debug_toolbar",
+    ]
+    MIDDLEWARE = [
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
+        *MIDDLEWARE,
+    ]
