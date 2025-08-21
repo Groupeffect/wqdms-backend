@@ -19,7 +19,6 @@ from django.contrib import admin
 from django.urls import re_path, include, path
 from django.conf.urls.static import static
 from django.conf import settings
-from debug_toolbar.toolbar import debug_toolbar_urls
 from django.conf import settings
 
 media = static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
@@ -32,6 +31,3 @@ urlpatterns = media + [
     re_path(r"admin/", admin.site.urls),
     re_path(r"", include("interface.urls.landingpage"), name="start"),
 ]
-
-if not settings.TESTING:
-    urlpatterns += debug_toolbar_urls()

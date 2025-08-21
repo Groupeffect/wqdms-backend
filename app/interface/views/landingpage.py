@@ -18,15 +18,24 @@ class StaticHtml(TemplateHTMLRenderer):
 class LandingpageAPIView(views.APIView):
     renderer_classes = [StaticHtml, BrowsableAPIRenderer, JSONRenderer]
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request, sub=None, pred=None, obj=None, *args, **kwargs):
         host = getattr(settings, "SERVER_HOST", "http://localhost:8000")
         if self.request.GET.get("format") not in ["api", "json"]:
             return response.Response(
                 data={
                     "response": {
+                        "user": {
+                            "is_authenticated": self.request.user.is_authenticated,
+                            "is_superuser": self.request.user.is_superuser,
+                            "is_staff": self.request.user.is_staff,
+                        },
+                        "host": host,
+                        "graph": {"sub": sub, "pred": pred, "obj": obj},
                         "data": {
                             "is_vue_app": True,
-                            "template": "ui/app/templates/vue.html",
+                            # "template": "ui/app/templates/vue.html",
+                            # "template": "build/index.html",
+                            "template": "ui/vueindex.html",
                             "layout": "ui/app/layouts/base.html",
                             "vueApp": "ui/app/vue/app.js",
                             "vueData": "ui/app/data/user.js.vue",
@@ -34,7 +43,9 @@ class LandingpageAPIView(views.APIView):
                             "footer": "ui/app/footers/footer.html",
                             "navbar": "ui/app/navbars/vuenavbar.html",
                             "view": "ui/app/views/Landingpage.html",
-                        }
+                            "script": "build/assets/index.js",
+                            "style": "build/assets/index.css",
+                        },
                     }
                 }
             )

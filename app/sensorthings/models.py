@@ -15,6 +15,13 @@ User = get_user_model()
 
 
 class SystemAbstractModel(meta.SystemAbstractModel):
+    owner = None
+    domain = models.CharField(max_length=256, blank=True, null=True)
+    namespace = models.CharField(max_length=256, blank=True, null=True)
+    category = models.CharField(max_length=256, blank=True, null=True)
+    label = models.CharField(max_length=256, blank=True, null=True)
+    tag = models.CharField(max_length=256, blank=True, null=True)
+    name = models.CharField(max_length=256, blank=True, null=True)
 
     class Meta:
         abstract = True

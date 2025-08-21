@@ -27,6 +27,11 @@ class SystemAbstractModel(meta.SystemAbstractModel):
 
 
 class ContentTypeAbstractModel(SystemAbstractModel):
+    domain = models.CharField(max_length=256, blank=True, null=True)
+    namespace = models.CharField(max_length=256, blank=True, null=True)
+    category = models.CharField(max_length=256, blank=True, null=True)
+    label = models.CharField(max_length=256, blank=True, null=True)
+    tag = models.CharField(max_length=256, blank=True, null=True)
     name = models.CharField(max_length=256, blank=True, null=True)
     limit = (
         models.Q(app_label="interface")
@@ -59,6 +64,8 @@ class Geometry(ContentTypeAbstractModel, gis_models.Model):
         models.Q(app_label="sensorthings", model="feature")
         | models.Q(app_label="sensorthings", model="location")
         | models.Q(app_label="waterquality", model="waterbody")
+        | models.Q(app_label="waterquality", model="Sample")
+        | models.Q(app_label="interface", model="Geometry")
     )
     entity = models.ForeignKey(
         ContentType,

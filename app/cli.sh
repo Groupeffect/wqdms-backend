@@ -23,7 +23,6 @@ cmd_wqdms_jupyter_start(){
 
 cmd_wqdms_backend_purge(){
     rm ./db.sqlite3
-    rm -drf ./wqdms/__pycache__
     MIGS='interface sensorthings waterquality'
     for i in $MIGS;do
         f="./$i/migrations"
@@ -40,4 +39,12 @@ cmd_python_remove_pycache(){
     for i in $(find ./ -name __pycache__ -type d);do 
         rm -drf $i 
     done
+}
+
+cmd_wqdms_shiny_server(){
+    shiny run --host 0.0.0.0 --port 8001 --reload /app/interactive/shiny/server.py
+}
+
+cmd_wqdms_shell_plus_lab(){
+    python3 manage.py shell_plus --lab
 }

@@ -5,6 +5,9 @@ from django.db import models as djmodels
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
 
+from rest_framework import filters, permissions
+from django_filters.rest_framework import DjangoFilterBackend
+
 
 class MainModelSerializer(serializers.ModelSerializer):
     class Meta:
@@ -37,7 +40,14 @@ class EndpointGenerator:
 
     def get_view(self):
         class V(MainModelViewSet):
+            permission_classes = [permissions.IsAuthenticatedOrReadOnly]
             serializer_class = self.get_serializer()
+            filterset_fields = ["id", "name", "label", "tag", "namespace", "domain"]
+            search_fields = filterset_fields
+            filter_backends = [
+                DjangoFilterBackend,
+                filters.SearchFilter,
+            ]
 
         return type(f"{self.model.__name__}ModelViewSet", (V,), {})
 

@@ -29,7 +29,7 @@ SECRET_KEY = "django-insecure--af3_fl2ti+dmfgz0_n09*xbam9#@tt6h1as0yj6$2b_+vq2^i
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-TESTING = "test" in sys.argv or "PYTEST_VERSION" in os.environ
+TESTING = False  # "test" in sys.argv or "PYTEST_VERSION" in os.environ
 ALLOWED_HOSTS = ["*"]
 CORS_ALLOW_METHODS = (
     *default_methods,
@@ -51,6 +51,7 @@ INTERNAL_IPS = [
 ]
 # Application definition
 
+
 INSTALLED_APPS = [
     "corsheaders",
     "django.contrib.admin",
@@ -68,6 +69,7 @@ INSTALLED_APPS = [
     "sensorthings",
     "waterquality",
     "interface",
+    "interactive",
     "api",
 ]
 
@@ -190,12 +192,35 @@ REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
-if not TESTING:
-    INSTALLED_APPS = [
-        *INSTALLED_APPS,
-        "debug_toolbar",
-    ]
-    MIDDLEWARE = [
-        "debug_toolbar.middleware.DebugToolbarMiddleware",
-        *MIDDLEWARE,
-    ]
+
+NOTEBOOK_ARGUMENTS = [
+    "--ip",
+    "0.0.0.0",
+    "--port",
+    "8002",
+    "--autoreload",
+    "--allow-root",
+    "--ServerApp.token=admin1234",
+    "--NotebookApp.default_url=/lab",
+    "--no-browser",
+    "--JupyterHub.bind_url='http://localhost:8002'",
+    # "--ServerApp.base_url=/lab",
+    # "--Spawner.default_url=/lab",
+    # "--ServerApp.default_url=/lab",
+    # "--ServerApp.port=8002",
+]
+# REST
+# REST_FRAMEWORK = {
+#     "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
+#     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+#     "PAGE_SIZE": 1,
+#     "DEFAULT_RENDERER_CLASSES": [
+#         "rest_framework.renderers.JSONRenderer",
+#         "rest_framework.renderers.BrowsableAPIRenderer",
+#     ],
+#     "DEFAULT_AUTHENTICATION_CLASSES": (
+#         "rest_framework_simplejwt.authentication.JWTAuthentication",
+#         "rest_framework.authentication.BasicAuthentication",
+#         "rest_framework.authentication.SessionAuthentication",
+#     ),
+# }

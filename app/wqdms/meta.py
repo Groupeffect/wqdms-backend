@@ -10,6 +10,7 @@ ONTOLOGIES = ["CUSTOM", "DC", "FOAF", "SOSA", "RDF", "RDFS"]
 
 
 class SystemAbstractModel(LifecycleModelMixin, models.Model):
+    private = models.BooleanField(blank=True, default=False)
     owner = models.ForeignKey(User, on_delete=models.DO_NOTHING, blank=True, null=True)
     uid = models.TextField(blank=True, null=True)
     # uuid = models.UUIDField(default=uuid4, auto_created=True) UUID-7

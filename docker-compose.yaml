@@ -1,0 +1,22 @@
+services:
+  wqdmsbackend:
+    build:
+      context: "./"
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+      - 8001:8001
+      - 8002:8002
+      - 8081:80
+    environment:
+      VUE_APP_API_URL: 'http://localhost:8000'
+    volumes:
+      - ./app:/app
+      - ./supervisor/supervisor.conf:/etc/supervisor/conf.d/supervisor.conf
+      - ./nginx:/etc/nginx/conf.d
+      - pypackages:/usr/local/lib/python3.12/site-packages
+    command: supervisord
+    # command: /bin/sh -c ". /app/cli.sh && cmd_wqdms_shiny_server"
+    # nginx -g 'daemon off;'
+volumes:
+  pypackages:

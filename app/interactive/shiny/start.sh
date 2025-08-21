@@ -1,0 +1,1 @@
+shiny run --reload /home/worker/apps/groupeffect/UNEP/repositories/wqdms-backend/app/interactive/shiny/server.py
