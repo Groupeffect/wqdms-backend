@@ -29,5 +29,6 @@ urlpatterns = media + [
     re_path(r"api/", include("api.urls.generator"), name="api"),
     re_path(r"ui/", include("interface.urls.visualization"), name="interface"),
     re_path(r"admin/", admin.site.urls),
+    path("management/", include("waterquality.urls"), name="waterquality"),
     re_path(r"", include("interface.urls.landingpage"), name="start"),
 ]

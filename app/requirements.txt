@@ -11,6 +11,7 @@ django-lifecycle
 djangorestframework
 djangorestframework_simplejwt
 drf-spectacular[sidecar]
+djangorestframework-gis
 gunicorn
 psycopg
 psycopg-binary

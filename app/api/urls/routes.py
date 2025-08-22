@@ -18,18 +18,18 @@ router = DefaultRouter()
 urlpatterns = [
     # *router.urls,
     path(
-        f"{version}/swagger/",
-        SpectacularSwaggerView.as_view(url_name="schema"),
-        name="schema",
-    ),
-    re_path(
-        f"{version}/redoc/",
-        SpectacularRedocView.as_view(url_name="schema"),
-        name="schema",
-    ),
-    re_path(
         f"{version}/schema/",
         SpectacularJSONAPIView().as_view(),
         name="schema",
+    ),
+    path(
+        f"{version}/swagger/",
+        SpectacularSwaggerView.as_view(url_name="schema"),
+        name="swagger",
+    ),
+    path(
+        f"{version}/redoc/",
+        SpectacularRedocView.as_view(url_name="schema"),
+        name="redoc",
     ),
 ]

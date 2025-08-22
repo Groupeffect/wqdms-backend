@@ -4,20 +4,45 @@ from django.contrib.admin import AdminSite
 from django.contrib.gis.admin import GISModelAdmin
 
 
-class MapDashboard(AdminSite):
-    site_title = "Map"
-    site_header = "Map"
-    index_title = "Map"
+class Management(AdminSite):
+    site_title = "Water Quality Management System"
+    site_header = "WQDMS"
+    index_title = site_title
+
+    # def has_permission(self, request):
+    #     return True
+
+    # def has_permission(self, request):
+    #     return request.user.groups.filter(name="stations").exists()
 
 
-gd = MapDashboard(name="Map")
+management = Management(name="WQDMS")
 
 
-@admin.register(models.Station, site=gd)
-class StationAdmin(GISModelAdmin):
-    list_display = ("name", "label", "geometry")
-    list_filter = ("tag", "label", "name")
+class MetaAdmin(GISModelAdmin):
+    list_display = ("name", "label", "tag", "id")
+    list_filter = ("tag", "label", "name", "id")
     search_fields = list_filter
+
+
+@admin.register(models.Station, site=management)
+class StationAdmin(MetaAdmin):
+    pass
+
+
+@admin.register(models.Catchment, site=management)
+class CatchmentAdmin(MetaAdmin):
+    pass
+
+
+@admin.register(models.Waterbody, site=management)
+class WaterbodyAdmin(MetaAdmin):
+    pass
+
+
+@admin.register(models.Institution, site=management)
+class InstitutionAdmin(MetaAdmin):
+    pass
 
 
 admin.site.register(models.Catchment)

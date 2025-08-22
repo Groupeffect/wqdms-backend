@@ -17,12 +17,15 @@
   <body>
     <script>
       {% autoescape off %}
-      const response = {{ response | to_json }};
+      const response = {{ response | to_json }} || {user:{is_authenticated: false}};
       const csrf = {
           "headerName": "{{ csrf_header_name|default:'X-CSRFToken' }}",
           "token": "{% if request %}{{ csrf_token }}{% endif %}"
         }
       {% endautoescape %}
+      {% block error %}
+      const error = null;
+      {% endblock error %}
     </script>
     <div id="app"></div>
     <!-- {{ script }} -->

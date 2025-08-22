@@ -30,19 +30,19 @@ class AnalysisMethod(SystemAbstractModel):
     pass
 
 
-class Waterbody(SystemAbstractModel):
-    pass
-
-    class Meta:
-        verbose_name_plural = "waterbodies"
-
-
 class SampleValue(SystemAbstractModel):
     pass
 
 
 class Fraction(SystemAbstractModel):
     pass
+
+
+class Waterbody(SystemAbstractModel, gis_models.Model):
+    geometry = gis_models.GeometryCollectionField(blank=True, null=True)
+
+    class Meta:
+        verbose_name_plural = "waterbodies"
 
 
 class Sampling(SystemAbstractModel, gis_models.Model):

@@ -3,7 +3,7 @@ html{
 }
 
 html{
-  background-color: black;
+  background-color: #121212;
   color:white;
 }
 
@@ -17,7 +17,8 @@ html{
 a,
 .green {
   text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
+  /* color: hsla(160, 100%, 37%, 1); */
+  color:#f2f8e9;
   transition: 0.4s;
   padding: 3px;
 }
@@ -32,7 +33,21 @@ a,
   color: rgb(211, 205, 138);
 }
 
+.textyellow{
+  color:#f5cd74;
+}
 
+#app-bar{
+  height: 49px;
+  background: #417690;
+  background-color: #417690;
+  color:#f5cd74;
+  vertical-align: middle;
+}
+
+.capitalize-first {
+    text-transform: capitalize;
+}
 /* header {
   line-height: 1.5;
   max-height: 100vh;

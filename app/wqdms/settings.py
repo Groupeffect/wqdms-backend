@@ -44,6 +44,9 @@ CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:8081",
     "http://0.0.0.0:8081",
     "http://localhost:8081",
+    "http://127.0.0.1:8080",
+    "http://0.0.0.0:8080",
+    "http://localhost:8080",
     SERVER_HOST,
 ]
 INTERNAL_IPS = [
@@ -63,6 +66,7 @@ INSTALLED_APPS = [
     "django.contrib.gis",
     "django_filters",
     "rest_framework",
+    "rest_framework_gis",
     "drf_spectacular",
     "drf_spectacular_sidecar",  # required for Django collectstatic
     "django_extensions",
@@ -176,11 +180,23 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 SPECTACULAR_SETTINGS = {
+    "REDOC_DIST": "SIDECAR",
+    "REDOC_UI_SETTINGS": {
+        "downloadDefinitionUrl": "/api/v0/schema/",
+    },
+    "OAS_VERSION": "3.0.3",
+    "TITLE": "Your Project API",
+    "DESCRIPTION": "Water Quality Data Management System",
+    "VERSION": "0.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
     "SWAGGER_UI_DIST": "SIDECAR",  # shorthand to use the sidecar instead
     "SWAGGER_UI_FAVICON_HREF": "SIDECAR",
-    "REDOC_DIST": "SIDECAR",
-    "OAS_VERSION": "3.0.0",
-    "VERSION": "0.0.0",
+    "SWAGGER_UI_SETTINGS": {
+        "deepLinking": True,
+        "persistAuthorization": True,
+        "displayOperationId": True,
+        "url": "/api/v0/schema",
+    },
 }
 
 SWAGGER_SETTINGS = {

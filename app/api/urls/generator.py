@@ -42,7 +42,10 @@ class EndpointGenerator:
         class V(MainModelViewSet):
             permission_classes = [permissions.IsAuthenticatedOrReadOnly]
             serializer_class = self.get_serializer()
-            filterset_fields = ["id", "name", "label", "tag", "namespace", "domain"]
+            filterset_fields = [
+                "id",
+                "name",
+            ]
             search_fields = filterset_fields
             filter_backends = [
                 DjangoFilterBackend,

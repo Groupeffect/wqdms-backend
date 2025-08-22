@@ -560,7 +560,7 @@ function endBatch() {
       e = next;
     }
   }
-  let error;
+  let error2;
   while (batchedSub) {
     let e = batchedSub;
     batchedSub = void 0;
@@ -573,13 +573,13 @@ function endBatch() {
           ;
           e.trigger();
         } catch (err) {
-          if (!error) error = err;
+          if (!error2) error2 = err;
         }
       }
       e = next;
     }
   }
-  if (error) throw error;
+  if (error2) throw error2;
 }
 function prepareDeps(sub) {
   for (let link = sub.deps; link; link = link.nextDep) {
@@ -3926,7 +3926,7 @@ function defineAsyncComponent(source) {
         });
       }
       const loaded = ref(false);
-      const error = ref();
+      const error2 = ref();
       const delayed = ref(!!delay);
       if (delay) {
         setTimeout(() => {
@@ -3935,12 +3935,12 @@ function defineAsyncComponent(source) {
       }
       if (timeout != null) {
         setTimeout(() => {
-          if (!loaded.value && !error.value) {
+          if (!loaded.value && !error2.value) {
             const err = new Error(
               `Async component timed out after ${timeout}ms.`
             );
             onError(err);
-            error.value = err;
+            error2.value = err;
           }
         }, timeout);
       }
@@ -3951,14 +3951,14 @@ function defineAsyncComponent(source) {
         }
       }).catch((err) => {
         onError(err);
-        error.value = err;
+        error2.value = err;
       });
       return () => {
         if (loaded.value && resolvedComp) {
           return createInnerComp(resolvedComp, instance);
-        } else if (error.value && errorComponent) {
+        } else if (error2.value && errorComponent) {
           return createVNode(errorComponent, {
-            error: error.value
+            error: error2.value
           });
         } else if (loadingComponent && !delayed.value) {
           return createVNode(loadingComponent);
@@ -11577,17 +11577,17 @@ function checkCompatEnabled(key, context, loc, ...args) {
   const enabled = isCompatEnabled(key, context);
   return enabled;
 }
-function defaultOnError(error) {
-  throw error;
+function defaultOnError(error2) {
+  throw error2;
 }
 function defaultOnWarn(msg) {
 }
 function createCompilerError(code, loc, messages, additionalMessage) {
   const msg = `https://vuejs.org/error-reference/#compiler-${code}`;
-  const error = new SyntaxError(String(msg));
-  error.code = code;
-  error.loc = loc;
-  return error;
+  const error2 = new SyntaxError(String(msg));
+  error2.code = code;
+  error2.loc = loc;
+  return error2;
 }
 const isStaticExp = (p2) => p2.type === 4 && p2.isStatic;
 function isCoreComponent(tag) {
@@ -16328,8 +16328,8 @@ function createRouterError(type, params) {
     }, params);
   }
 }
-function isNavigationFailure(error, type) {
-  return error instanceof Error && NavigationFailureSymbol in error && (type == null || !!(error.type & type));
+function isNavigationFailure(error2, type) {
+  return error2 instanceof Error && NavigationFailureSymbol in error2 && (type == null || !!(error2.type & type));
 }
 const BASE_PARAM_PATTERN = "[^/]+?";
 const BASE_PATH_PARSER_OPTIONS = {
@@ -17413,16 +17413,16 @@ function createRouter(options) {
         false
       );
     }
-    return (failure ? Promise.resolve(failure) : navigate(toLocation, from)).catch((error) => isNavigationFailure(error) ? (
+    return (failure ? Promise.resolve(failure) : navigate(toLocation, from)).catch((error2) => isNavigationFailure(error2) ? (
       // navigation redirects still mark the router as ready
       isNavigationFailure(
-        error,
+        error2,
         2
         /* ErrorTypes.NAVIGATION_GUARD_REDIRECT */
-      ) ? error : markAsReady(error)
+      ) ? error2 : markAsReady(error2)
     ) : (
       // reject any unknown error
-      triggerError(error, toLocation, from)
+      triggerError(error2, toLocation, from)
     )).then((failure2) => {
       if (failure2) {
         if (isNavigationFailure(
@@ -17451,8 +17451,8 @@ function createRouter(options) {
     });
   }
   function checkCanceledNavigationAndReject(to, from) {
-    const error = checkCanceledNavigation(to, from);
-    return error ? Promise.reject(error) : Promise.resolve();
+    const error2 = checkCanceledNavigation(to, from);
+    return error2 ? Promise.reject(error2) : Promise.resolve();
   }
   function runWithContext(fn) {
     const app2 = installedApps.values().next().value;
@@ -17521,9 +17521,9 @@ function createRouter(options) {
     afterGuards.list().forEach((guard) => runWithContext(() => guard(to, from, failure)));
   }
   function finalizeNavigation(toLocation, from, isPush, replace22, data) {
-    const error = checkCanceledNavigation(toLocation, from);
-    if (error)
-      return error;
+    const error2 = checkCanceledNavigation(toLocation, from);
+    if (error2)
+      return error2;
     const isFirstNavigation = from === START_LOCATION_NORMALIZED;
     const state = !isBrowser ? {} : history.state;
     if (isPush) {
@@ -17556,21 +17556,21 @@ function createRouter(options) {
       if (isBrowser) {
         saveScrollPosition(getScrollKey(from.fullPath, info.delta), computeScrollPosition());
       }
-      navigate(toLocation, from).catch((error) => {
+      navigate(toLocation, from).catch((error2) => {
         if (isNavigationFailure(
-          error,
+          error2,
           4 | 8
           /* ErrorTypes.NAVIGATION_CANCELLED */
         )) {
-          return error;
+          return error2;
         }
         if (isNavigationFailure(
-          error,
+          error2,
           2
           /* ErrorTypes.NAVIGATION_GUARD_REDIRECT */
         )) {
           pushWithRedirect(
-            assign(locationAsObject(error.to), {
+            assign(locationAsObject(error2.to), {
               force: true
             }),
             toLocation
@@ -17589,7 +17589,7 @@ function createRouter(options) {
         if (info.delta) {
           routerHistory.go(-info.delta, false);
         }
-        return triggerError(error, toLocation, from);
+        return triggerError(error2, toLocation, from);
       }).then((failure) => {
         failure = failure || finalizeNavigation(
           // after navigation, all matched components are resolved
@@ -17621,15 +17621,15 @@ function createRouter(options) {
   let readyHandlers = useCallbacks();
   let errorListeners = useCallbacks();
   let ready;
-  function triggerError(error, to, from) {
-    markAsReady(error);
+  function triggerError(error2, to, from) {
+    markAsReady(error2);
     const list = errorListeners.list();
     if (list.length) {
-      list.forEach((handler) => handler(error, to, from));
+      list.forEach((handler) => handler(error2, to, from));
     } else {
-      console.error(error);
+      console.error(error2);
     }
-    return Promise.reject(error);
+    return Promise.reject(error2);
   }
   function isReady() {
     if (ready && currentRoute.value !== START_LOCATION_NORMALIZED)
@@ -21596,12 +21596,16 @@ const _export_sfc = (sfc, props) => {
   return target;
 };
 const _sfc_main$5 = {
-  name: "about"
+  name: "about",
+  created() {
+    this.$apiGet("/management/api/station/");
+  }
 };
 function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
-  return openBlock(), createElementBlock("div", null, _cache[0] || (_cache[0] = [
-    createBaseVNode("h1", null, "Water Quality Data Management System", -1)
-  ]));
+  return openBlock(), createElementBlock("div", null, [
+    _cache[0] || (_cache[0] = createBaseVNode("h1", null, "Water Quality Data Management System", -1)),
+    createTextVNode(" " + toDisplayString(_ctx.$apiResponse), 1)
+  ]);
 }
 const AboutView = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$5]]);
 const _sfc_main$4 = {
@@ -21609,9 +21613,14 @@ const _sfc_main$4 = {
   props: {
     subjects: Array,
     predicates: Array,
-    objects: Array
+    objects: Array,
+    objectItems: Array,
+    reload: Boolean
   }
 };
+const _hoisted_1$4 = ["href"];
+const _hoisted_2$3 = ["href"];
+const _hoisted_3$3 = ["href"];
 function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_RouterLink = resolveComponent("RouterLink");
   const _component_v_list_item = resolveComponent("v-list-item");
@@ -21623,6 +21632,7 @@ function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
       }, {
         default: withCtx(() => [
           createVNode(_component_RouterLink, {
+            class: "capitalize-first",
             to: "/" + subject
           }, {
             default: withCtx(() => [
@@ -21637,7 +21647,13 @@ function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
                   key: kk + "-pred"
                 }, {
                   default: withCtx(() => [
-                    createVNode(_component_RouterLink, {
+                    $props.reload ? (openBlock(), createElementBlock("a", {
+                      key: 0,
+                      class: "capitalize-first",
+                      href: "/" + subject + "/" + predicate + "/"
+                    }, toDisplayString(predicate), 9, _hoisted_1$4)) : (openBlock(), createBlock(_component_RouterLink, {
+                      key: 1,
+                      class: "capitalize-first",
                       style: { "font-size": "smaller", "color": "white" },
                       to: "/" + subject + "/" + predicate + "/"
                     }, {
@@ -21645,23 +21661,61 @@ function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
                         createTextVNode(toDisplayString(predicate), 1)
                       ]),
                       _: 2
-                    }, 1032, ["to"]),
-                    _ctx.$graph.pred === predicate && _ctx.$graph.sub === subject && this.predicates && this.predicates.length && this.objects && this.objects.length ? (openBlock(), createBlock(_component_v_list, { key: 0 }, {
+                    }, 1032, ["to"])),
+                    _ctx.$graph.pred === predicate && _ctx.$graph.sub === subject && this.predicates && this.predicates.length && this.objectItems && this.objectItems.length ? (openBlock(), createBlock(_component_v_list, { key: 2 }, {
+                      default: withCtx(() => [
+                        (openBlock(true), createElementBlock(Fragment, null, renderList(this.objectItems, (object, kkk) => {
+                          return openBlock(), createElementBlock("div", {
+                            key: kkk + "-pred"
+                          }, [
+                            predicate == object.predicate ? (openBlock(), createBlock(_component_v_list_item, {
+                              key: 0,
+                              style: { "font-size": "smaller" }
+                            }, {
+                              default: withCtx(() => [
+                                $props.reload && object.reload ? (openBlock(), createElementBlock("a", {
+                                  key: 0,
+                                  class: "capitalize-first",
+                                  href: "/" + subject + "/" + predicate + "/" + object.label + "/"
+                                }, toDisplayString(object.label), 9, _hoisted_2$3)) : (openBlock(), createBlock(_component_RouterLink, {
+                                  key: 1,
+                                  class: "capitalize-first",
+                                  to: "/" + subject + "/" + predicate + "/" + object.label + "/"
+                                }, {
+                                  default: withCtx(() => [
+                                    createTextVNode(toDisplayString(object.label), 1)
+                                  ]),
+                                  _: 2
+                                }, 1032, ["to"]))
+                              ]),
+                              _: 2
+                            }, 1024)) : createCommentVNode("", true)
+                          ]);
+                        }), 128))
+                      ]),
+                      _: 2
+                    }, 1024)) : _ctx.$graph.pred === predicate && _ctx.$graph.sub === subject && this.predicates && this.predicates.length && this.objects && this.objects.length ? (openBlock(), createBlock(_component_v_list, { key: 3 }, {
                       default: withCtx(() => [
                         (openBlock(true), createElementBlock(Fragment, null, renderList(this.objects, (object, kkk) => {
                           return openBlock(), createBlock(_component_v_list_item, {
-                            key: kkk + "-pred"
+                            key: kkk + "-pred",
+                            style: { "font-size": "smaller" }
                           }, {
                             default: withCtx(() => [
-                              createVNode(_component_RouterLink, {
-                                style: { "font-size": "smaller" },
+                              $props.reload ? (openBlock(), createElementBlock("a", {
+                                key: 0,
+                                class: "capitalize-first",
+                                href: "/" + subject + "/" + predicate + "/" + object + "/"
+                              }, toDisplayString(object), 9, _hoisted_3$3)) : (openBlock(), createBlock(_component_RouterLink, {
+                                key: 1,
+                                class: "capitalize-first",
                                 to: "/" + subject + "/" + predicate + "/" + object + "/"
                               }, {
                                 default: withCtx(() => [
                                   createTextVNode(toDisplayString(object), 1)
                                 ]),
                                 _: 2
-                              }, 1032, ["to"])
+                              }, 1032, ["to"]))
                             ]),
                             _: 2
                           }, 1024);
@@ -21689,7 +21743,30 @@ const _sfc_main$3 = {
     drawerLeft: false,
     selection: null
   }),
-  components: { AboutView, SubPredObjNav }
+  components: { AboutView, SubPredObjNav },
+  computed: {
+    navigation() {
+      return {
+        left: [
+          {
+            sub: ["management"],
+            pred: ["waterquality", "interface"],
+            objectItems: [...["station", "catchment", "waterbody", "institution"].map((e) => ({ predicate: "waterquality", label: e, reload: true })), ...["parameter", "unit"].map((e) => ({ predicate: "interface", label: e, reload: false }))]
+          },
+          {
+            sub: ["dashboard"],
+            pred: ["station", "catchment", "waterbody", "institution"],
+            objects: ["map", "table", "diagram", "chart"]
+          },
+          {
+            sub: ["documentation"],
+            pred: ["unit", "parameter", "property", "propertyrelation"],
+            objects: ["table", "filter", "eit"]
+          }
+        ]
+      };
+    }
+  }
 };
 const _hoisted_1$3 = {
   key: 0,
@@ -21698,7 +21775,7 @@ const _hoisted_1$3 = {
 const _hoisted_2$2 = { class: "d-flex justify-left align-top" };
 const _hoisted_3$2 = { class: "d-flex justify-right align-top" };
 const _hoisted_4$2 = { key: 1 };
-const _hoisted_5$1 = {
+const _hoisted_5$2 = {
   id: "logoutForm",
   method: "post",
   action: "/api/auth/logout/?next=/"
@@ -21716,14 +21793,12 @@ function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_AboutView = resolveComponent("AboutView");
   const _component_v_main = resolveComponent("v-main");
   const _component_v_layout = resolveComponent("v-layout");
-  return openBlock(), createBlock(_component_v_layout, {
-    ref: "app",
-    class: ""
-  }, {
+  return openBlock(), createBlock(_component_v_layout, { ref: "app" }, {
     default: withCtx(() => [
       createVNode(_component_v_app_bar, {
-        color: "surface-variant",
-        name: "app-bar"
+        name: "app-bar",
+        id: "app-bar",
+        height: "49"
       }, {
         default: withCtx(() => [
           createVNode(_component_v_btn, {
@@ -21735,14 +21810,17 @@ function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
             _: 1,
             __: [6]
           }),
-          createVNode(_component_RouterLink, { to: "/" }, {
+          createVNode(_component_RouterLink, {
+            class: "textyellow",
+            to: "/"
+          }, {
             default: withCtx(() => _cache[7] || (_cache[7] = [
               createTextVNode("WQDMS", -1)
             ])),
             _: 1,
             __: [7]
           }),
-          _ctx.$serversiderendered ? (openBlock(), createElementBlock("a", _hoisted_1$3, "Admin")) : createCommentVNode("", true),
+          _ctx.$serversiderendered && _ctx.$user.is_superuser ? (openBlock(), createElementBlock("a", _hoisted_1$3, "Admin")) : createCommentVNode("", true),
           createVNode(_component_v_btn, {
             onClick: _cache[1] || (_cache[1] = ($event) => _ctx.drawerRight = !_ctx.drawerRight),
             style: { "right": "0px", "position": "fixed" }
@@ -21759,7 +21837,7 @@ function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
         _: 1
       }),
       createVNode(_component_v_navigation_drawer, {
-        color: "black",
+        color: "#121212",
         name: "drawerLeft",
         modelValue: _ctx.drawerLeft,
         "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => _ctx.drawerLeft = $event),
@@ -21772,14 +21850,23 @@ function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
             createVNode(_component_v_list, null, {
               default: withCtx(() => [
                 createVNode(_component_SubPredObjNav, {
-                  subjects: ["Waterquality", "Measurement"],
-                  predicates: ["Stations", "Catchments", "Waterbodies", "Institutions"],
-                  objects: ["Map", "Table", "Filter", "Edit"]
-                }),
+                  reload: false,
+                  subjects: $options.navigation.left[1].sub,
+                  predicates: $options.navigation.left[1].pred,
+                  objects: $options.navigation.left[1].objects
+                }, null, 8, ["subjects", "predicates", "objects"]),
                 createVNode(_component_SubPredObjNav, {
-                  subjects: ["Units", "Parameters", "Properties", "Samples", "Sampling"],
-                  predicates: ["Table", "Filter", "Edit"]
-                })
+                  reload: _ctx.$serversiderendered,
+                  subjects: $options.navigation.left[0].sub,
+                  predicates: $options.navigation.left[0].pred,
+                  objectItems: $options.navigation.left[0].objectItems
+                }, null, 8, ["reload", "subjects", "predicates", "objectItems"]),
+                createVNode(_component_SubPredObjNav, {
+                  reload: false,
+                  subjects: $options.navigation.left[2].sub,
+                  predicates: $options.navigation.left[2].pred,
+                  objects: $options.navigation.left[2].object
+                }, null, 8, ["subjects", "predicates", "objects"])
               ]),
               _: 1
             })
@@ -21788,7 +21875,7 @@ function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
         _: 1
       }, 8, ["modelValue", "permanent"]),
       createVNode(_component_v_navigation_drawer, {
-        color: "black",
+        color: "#121212",
         name: "drawerRight",
         modelValue: _ctx.drawerRight,
         "onUpdate:modelValue": _cache[5] || (_cache[5] = ($event) => _ctx.drawerRight = $event),
@@ -21829,7 +21916,7 @@ function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
                                 class: "attention",
                                 onClick: _cache[4] || (_cache[4] = (...args) => _ctx.$logout && _ctx.$logout(...args))
                               }, "Logout")) : (openBlock(), createElementBlock("div", _hoisted_4$2, [
-                                createBaseVNode("form", _hoisted_5$1, [
+                                createBaseVNode("form", _hoisted_5$2, [
                                   createBaseVNode("input", {
                                     type: "hidden",
                                     name: "csrfmiddlewaretoken",
@@ -21905,7 +21992,7 @@ function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
   }, 512);
 }
-const App = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$3], ["__scopeId", "data-v-2aad0313"]]);
+const App = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$3], ["__scopeId", "data-v-f31715aa"]]);
 const App$1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: App
@@ -22357,16 +22444,16 @@ const descriptors = {};
 });
 Object.defineProperties(AxiosError$1, descriptors);
 Object.defineProperty(prototype$1, "isAxiosError", { value: true });
-AxiosError$1.from = (error, code, config, request, response2, customProps) => {
+AxiosError$1.from = (error2, code, config, request, response2, customProps) => {
   const axiosError = Object.create(prototype$1);
-  utils$1.toFlatObject(error, axiosError, function filter2(obj) {
+  utils$1.toFlatObject(error2, axiosError, function filter2(obj) {
     return obj !== Error.prototype;
   }, (prop) => {
     return prop !== "isAxiosError";
   });
-  AxiosError$1.call(axiosError, error.message, code, config, request, response2);
-  axiosError.cause = error;
-  axiosError.name = error.name;
+  AxiosError$1.call(axiosError, error2.message, code, config, request, response2);
+  axiosError.cause = error2;
+  axiosError.name = error2.name;
   customProps && Object.assign(axiosError, customProps);
   return axiosError;
 };
@@ -24049,15 +24136,15 @@ let Axios$1 = class Axios {
       const onRejected = requestInterceptorChain[i++];
       try {
         newConfig = onFulfilled(newConfig);
-      } catch (error) {
-        onRejected.call(this, error);
+      } catch (error2) {
+        onRejected.call(this, error2);
         break;
       }
     }
     try {
       promise = dispatchRequest.call(this, newConfig);
-    } catch (error) {
-      return Promise.reject(error);
+    } catch (error2) {
+      return Promise.reject(error2);
     }
     i = 0;
     len = responseInterceptorChain.length;
@@ -24322,9 +24409,15 @@ const MainMixin = {
   data: () => ({
     is_authenticated: false,
     jwt: null,
-    csrf: null
+    csrf: null,
+    error: null,
+    response: null,
+    apiResponse: null
   }),
   computed: {
+    $error() {
+      return this.error || null;
+    },
     $user() {
       return { authenticated: this.is_authenticated, username: "Demo", csrf: this.csrf };
     },
@@ -24335,16 +24428,23 @@ const MainMixin = {
       return this.$route.params;
     },
     $response() {
-      return response;
+      return this.response;
     },
     $serversiderendered() {
       return window.location.origin == this.$env.VITE_VUE_APP_API_URL;
+    },
+    $apiResponse() {
+      return this.apiResponse || null;
     }
   },
   methods: {
     $apiGet(url) {
       this.$env.VITE_VUE_APP_API_URL + url;
-      axios.get(url).then((r) => {
+      const headers = {
+        "Content-Type": "applications/json"
+      };
+      axios.get(url, headers).then((r) => {
+        this.apiResponse = r;
         console.log(r);
       }).catch((e) => {
         console.log(e);
@@ -24366,8 +24466,10 @@ const MainMixin = {
     }
   },
   created() {
-    this.is_authenticated = this.$response.user.is_authenticated;
     this.csrf = csrf;
+    this.error = error;
+    this.response = { user: { is_authenticated: false }, ...response };
+    this.is_authenticated = this.$response.user.is_authenticated;
   }
 };
 const makeVAppProps = propsFactory({
@@ -49918,7 +50020,7 @@ const _hoisted_1$2 = { class: "ml-2" };
 const _hoisted_2$1 = ["href"];
 const _hoisted_3$1 = { class: "ml-2" };
 const _hoisted_4$1 = ["href"];
-const _hoisted_5 = { class: "ml-2" };
+const _hoisted_5$1 = { class: "ml-2" };
 const _hoisted_6 = ["href"];
 function _sfc_render$2(_ctx, _cache) {
   const _component_v_card_title = resolveComponent("v-card-title");
@@ -49960,7 +50062,7 @@ function _sfc_render$2(_ctx, _cache) {
         }),
         createVNode(_component_v_card_actions, null, {
           default: withCtx(() => [
-            createBaseVNode("h2", _hoisted_5, [
+            createBaseVNode("h2", _hoisted_5$1, [
               createBaseVNode("a", {
                 target: "_blank",
                 title: "schema",
@@ -50026,26 +50128,47 @@ const _hoisted_1 = { key: 0 };
 const _hoisted_2 = { key: 1 };
 const _hoisted_3 = { key: 2 };
 const _hoisted_4 = { key: 3 };
+const _hoisted_5 = { key: 4 };
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
+  const _component_v_btn = resolveComponent("v-btn");
   const _component_Openapi = resolveComponent("Openapi");
   const _component_Api = resolveComponent("Api");
   return openBlock(), createElementBlock("div", null, [
-    _ctx.$graph.pred == "Map" ? (openBlock(), createElementBlock("div", _hoisted_1, _cache[0] || (_cache[0] = [
+    _ctx.$error ? (openBlock(), createElementBlock("div", _hoisted_1, [
+      createBaseVNode("h1", null, [
+        createTextVNode(toDisplayString(_ctx.$error) + " ", 1),
+        createVNode(_component_v_btn, {
+          variant: "text",
+          color: "red",
+          onClick: _cache[0] || (_cache[0] = ($event) => _ctx.error = null)
+        }, {
+          default: withCtx(() => _cache[1] || (_cache[1] = [
+            createTextVNode("close", -1)
+          ])),
+          _: 1,
+          __: [1]
+        }),
+        _cache[2] || (_cache[2] = createBaseVNode("br", null, null, -1))
+      ]),
+      _cache[3] || (_cache[3] = createBaseVNode("br", null, null, -1)),
+      _cache[4] || (_cache[4] = createBaseVNode("hr", null, null, -1))
+    ])) : createCommentVNode("", true),
+    _ctx.$graph.pred == "map" ? (openBlock(), createElementBlock("div", _hoisted_2, _cache[5] || (_cache[5] = [
       createBaseVNode("h1", null, "Map", -1)
-    ]))) : _ctx.$graph.sub == "Services" && _ctx.$graph.pred == "OpenApi" ? (openBlock(), createElementBlock("div", _hoisted_2, [
+    ]))) : _ctx.$graph.sub == "Services" && _ctx.$graph.pred == "OpenApi" ? (openBlock(), createElementBlock("div", _hoisted_3, [
       createVNode(_component_Openapi)
-    ])) : _ctx.$graph.sub == "Services" && _ctx.$graph.pred == "Api" ? (openBlock(), createElementBlock("div", _hoisted_3, [
+    ])) : _ctx.$graph.sub == "Services" && _ctx.$graph.pred == "Api" ? (openBlock(), createElementBlock("div", _hoisted_4, [
       createVNode(_component_Api)
-    ])) : (openBlock(), createElementBlock("div", _hoisted_4, [
+    ])) : (openBlock(), createElementBlock("div", _hoisted_5, [
       createBaseVNode("h1", null, toDisplayString(_ctx.$graph.sub) + " " + toDisplayString(_ctx.$graph.pred) + " " + toDisplayString(_ctx.$graph.obj), 1),
       createBaseVNode("pre", null, "" + toDisplayString(_ctx.$response) + "\n      ", 1),
-      _cache[1] || (_cache[1] = createBaseVNode("br", null, null, -1)),
-      _cache[2] || (_cache[2] = createBaseVNode("hr", null, null, -1)),
-      _cache[3] || (_cache[3] = createBaseVNode("br", null, null, -1)),
-      createBaseVNode("pre", null, "" + toDisplayString(_ctx.$graph) + "\n      ", 1),
-      _cache[4] || (_cache[4] = createBaseVNode("br", null, null, -1)),
-      _cache[5] || (_cache[5] = createBaseVNode("hr", null, null, -1)),
       _cache[6] || (_cache[6] = createBaseVNode("br", null, null, -1)),
+      _cache[7] || (_cache[7] = createBaseVNode("hr", null, null, -1)),
+      _cache[8] || (_cache[8] = createBaseVNode("br", null, null, -1)),
+      createBaseVNode("pre", null, "" + toDisplayString(_ctx.$graph) + "\n      ", 1),
+      _cache[9] || (_cache[9] = createBaseVNode("br", null, null, -1)),
+      _cache[10] || (_cache[10] = createBaseVNode("hr", null, null, -1)),
+      _cache[11] || (_cache[11] = createBaseVNode("br", null, null, -1)),
       createBaseVNode("pre", null, "" + toDisplayString(_ctx.$env) + "\nserversiderendered: " + toDisplayString(_ctx.$serversiderendered) + "\n      ", 1)
     ]))
   ]);
