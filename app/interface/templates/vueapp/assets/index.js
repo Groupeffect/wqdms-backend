@@ -24403,7 +24403,7 @@ const {
   getAdapter,
   mergeConfig
 } = axios;
-const __vite_import_meta_env__ = { "BASE_URL": "/", "DEV": false, "MODE": "production", "PROD": true, "SSR": false, "VITE_VUE_APP_API_URL": "http://localhost:8000" };
+const __vite_import_meta_env__ = { "BASE_URL": "/", "DEV": false, "MODE": "production", "PROD": true, "SSR": false, "VITE_VUE_APP_API_URL": "http://localhost:8081" };
 const MainMixin = {
   name: "MainMixin",
   data: () => ({
@@ -50130,6 +50130,9 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_Openapi = resolveComponent("Openapi");
   const _component_Api = resolveComponent("Api");
   return openBlock(), createElementBlock("div", null, [
+    _cache[12] || (_cache[12] = createBaseVNode("code", null, "development", -1)),
+    _cache[13] || (_cache[13] = createBaseVNode("br", null, null, -1)),
+    _cache[14] || (_cache[14] = createBaseVNode("br", null, null, -1)),
     _ctx.$error ? (openBlock(), createElementBlock("div", _hoisted_1, [
       createBaseVNode("h1", null, [
         createTextVNode(toDisplayString(_ctx.$error) + " ", 1),
