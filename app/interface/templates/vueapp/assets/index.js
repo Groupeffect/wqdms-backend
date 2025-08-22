@@ -21619,7 +21619,7 @@ const _sfc_main$4 = {
   }
 };
 const _hoisted_1$4 = ["href"];
-const _hoisted_2$3 = ["href"];
+const _hoisted_2$4 = ["href"];
 const _hoisted_3$3 = ["href"];
 function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_RouterLink = resolveComponent("RouterLink");
@@ -21677,7 +21677,7 @@ function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
                                   key: 0,
                                   class: "capitalize-first",
                                   href: "/" + subject + "/" + predicate + "/" + object.label + "/"
-                                }, toDisplayString(object.label), 9, _hoisted_2$3)) : (openBlock(), createBlock(_component_RouterLink, {
+                                }, toDisplayString(object.label), 9, _hoisted_2$4)) : (openBlock(), createBlock(_component_RouterLink, {
                                   key: 1,
                                   class: "capitalize-first",
                                   to: "/" + subject + "/" + predicate + "/" + object.label + "/"
@@ -21772,7 +21772,7 @@ const _hoisted_1$3 = {
   key: 0,
   href: "/admin/"
 };
-const _hoisted_2$2 = { class: "d-flex justify-left align-top" };
+const _hoisted_2$3 = { class: "d-flex justify-left align-top" };
 const _hoisted_3$2 = { class: "d-flex justify-right align-top" };
 const _hoisted_4$2 = { key: 1 };
 const _hoisted_5$2 = {
@@ -21846,7 +21846,7 @@ function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
         permanent: _ctx.drawerLeft
       }, {
         default: withCtx(() => [
-          createBaseVNode("div", _hoisted_2$2, [
+          createBaseVNode("div", _hoisted_2$3, [
             createVNode(_component_v_list, null, {
               default: withCtx(() => [
                 createVNode(_component_SubPredObjNav, {
@@ -24454,13 +24454,13 @@ const MainMixin = {
       console.log("Login");
       console.log(window.location.origin, this.$env.VITE_VUE_APP_API_URL, window.location.origin == this.$env.VITE_VUE_APP_API_URL);
       if (this.$serversiderendered) {
-        window.location.href = "/api/auth/login";
+        window.location.href = "/api/auth/login/";
       }
       this.is_authenticated = true;
     },
     $logout() {
       if (this.$serversiderendered) {
-        window.location.href = "/api/auth/login";
+        window.location.href = "/api/auth/login/";
       }
       this.is_authenticated = false;
     }
@@ -50017,7 +50017,7 @@ app.mixin(MainMixin);
 app.mount("#app");
 const _sfc_main$2 = {};
 const _hoisted_1$2 = { class: "ml-2" };
-const _hoisted_2$1 = ["href"];
+const _hoisted_2$2 = ["href"];
 const _hoisted_3$1 = { class: "ml-2" };
 const _hoisted_4$1 = ["href"];
 const _hoisted_5$1 = { class: "ml-2" };
@@ -50043,7 +50043,7 @@ function _sfc_render$2(_ctx, _cache) {
                 target: "_blank",
                 title: "swagger",
                 href: [[_ctx.$env.VITE_VUE_APP_API_URL]] + "/api/v0/swagger/"
-              }, " UI Swagger ", 8, _hoisted_2$1)
+              }, " UI Swagger ", 8, _hoisted_2$2)
             ])
           ]),
           _: 1
@@ -50079,7 +50079,8 @@ function _sfc_render$2(_ctx, _cache) {
 }
 const Openapi = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$2]]);
 const _sfc_main$1 = {};
-const _hoisted_1$1 = ["href"];
+const _hoisted_1$1 = { class: "ml-2" };
+const _hoisted_2$1 = ["href"];
 function _sfc_render$1(_ctx, _cache) {
   const _component_v_card_title = resolveComponent("v-card-title");
   const _component_v_card_actions = resolveComponent("v-card-actions");
@@ -50096,18 +50097,13 @@ function _sfc_render$1(_ctx, _cache) {
         }),
         createVNode(_component_v_card_actions, null, {
           default: withCtx(() => [
-            (openBlock(), createElementBlock(Fragment, null, renderList(["interface"], (v, k) => {
-              return createBaseVNode("h2", {
-                class: "ml-2",
-                key: k
-              }, [
-                _cache[1] || (_cache[1] = createTextVNode(" Link to: ", -1)),
-                createBaseVNode("a", {
-                  target: "_blank",
-                  href: [[_ctx.$env.VITE_VUE_APP_API_URL]] + "/api/v0/interface/?format=api"
-                }, toDisplayString(v), 9, _hoisted_1$1)
-              ]);
-            }), 64))
+            createBaseVNode("h2", _hoisted_1$1, [
+              _cache[1] || (_cache[1] = createTextVNode(" Link to: ", -1)),
+              createBaseVNode("a", {
+                target: "_blank",
+                href: [[_ctx.$env.VITE_VUE_APP_API_URL]] + "/management/api/"
+              }, " Management API ", 8, _hoisted_2$1)
+            ])
           ]),
           _: 1
         })

@@ -51,6 +51,7 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 INTERNAL_IPS = [
     "127.0.0.1",
+    "0.0.0.0",
 ]
 # Application definition
 
