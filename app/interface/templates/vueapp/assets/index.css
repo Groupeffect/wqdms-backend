@@ -1,5 +1,5 @@
 html{
-    background-color: black;
+    background-color: #121212;
 }
 
 html{
@@ -48,6 +48,32 @@ a,
 .capitalize-first {
     text-transform: capitalize;
 }
+
+.background-primary{
+  background-color: #121212;
+  background: #121212;
+  color: white;
+}
+
+.background-secondary{
+  background:#417690;
+  background-color:#417690;
+  color:#f5cd74;
+}
+
+img[data-v-940c4b01] {
+  width: 80%;
+  height: auto;
+  padding: 42px;
+}
+.center[data-v-940c4b01] {
+  text-align: center;
+}
+.dashboard-img[data-v-940c4b01] {
+  padding: 42px;
+}
+.dashboard-title[data-v-940c4b01] {}
+
 /* header {
   line-height: 1.5;
   max-height: 100vh;
@@ -27478,4 +27504,25 @@ textarea.v-field__input::placeholder {
 }
 .v-treeview-group.v-list-group .v-list-group__items .v-list-item {
   padding-inline-start: calc(var(--indent-padding)) !important;
+}
+#map {
+    height: 400px;
+    width: 100%;
+    margin-bottom: 42px;
+    margin-top: 42px;
+}
+
+.card[data-v-19b1f16d] {
+    width: 250px;
+    display: inline-block;
+    margin: 0px;
+    padding: 0px;
+}
+.background-primary[data-v-19b1f16d] {
+    background: #363c3d;
+    color: white;
+}
+.background-secondary[data-v-19b1f16d] {
+    background: #417690bd;
+    color: #f5cd74;
 }

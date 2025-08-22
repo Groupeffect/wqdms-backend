@@ -183,7 +183,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 SPECTACULAR_SETTINGS = {
     "REDOC_DIST": "SIDECAR",
     "REDOC_UI_SETTINGS": {
-        "downloadDefinitionUrl": "/api/v0/schema/",
+        # "downloadDefinitionUrl": "/api/v0/schema/",
     },
     "OAS_VERSION": "3.0.3",
     "TITLE": "Your Project API",
@@ -196,7 +196,7 @@ SPECTACULAR_SETTINGS = {
         "deepLinking": True,
         "persistAuthorization": True,
         "displayOperationId": True,
-        "url": "/api/v0/schema",
+        # "url": "/api/v0/schema/",
     },
 }
 

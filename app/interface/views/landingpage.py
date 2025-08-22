@@ -28,6 +28,7 @@ class LandingpageAPIView(views.APIView):
                             "is_authenticated": self.request.user.is_authenticated,
                             "is_superuser": self.request.user.is_superuser,
                             "is_staff": self.request.user.is_staff,
+                            "name": self.request.user.username,
                         },
                         "host": host,
                         "graph": {"sub": sub, "pred": pred, "obj": obj},
